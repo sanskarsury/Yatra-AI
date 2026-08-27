@@ -1,0 +1,549 @@
+<!DOCTYPE.html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Yatra AI | Intelligent Travel Companion</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            min-height: 100vh;
+            background:
+                linear-gradient(rgba(7, 28, 57, 0.78), rgba(7, 28, 57, 0.78)),
+                url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=2000&q=80");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #172033;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            width: 100%;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            font-size: 23px;
+            font-weight: 800;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            box-shadow: 0 8px 25px rgba(0,114,255,0.35);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+            color: #7dd3fc;
+        }
+
+        /* HERO */
+
+        .hero {
+            text-align: center;
+            color: white;
+            padding: 65px 20px 40px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            border-radius: 50px;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            font-size: 13px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero h1 {
+            font-size: clamp(38px, 6vw, 68px);
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin-bottom: 14px;
+        }
+
+       .hero h1 span {
+    background: linear-gradient(90deg, #38bdf8, #a78bfa);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+        .hero p {
+            max-width: 650px;
+            margin: auto;
+            line-height: 1.7;
+            font-size: 17px;
+            color: rgba(255,255,255,0.82);
+        }
+
+        /* MAIN CARD */
+
+        .container {
+            width: min(1100px, 92%);
+            margin: 20px auto 70px;
+        }
+
+        .planner-card {
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            padding: 38px;
+            box-shadow:
+                0 30px 80px rgba(0,0,0,0.25),
+                0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .card-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .heading-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .heading-icon {
+            width: 52px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            background: #e0f2fe;
+            color: #0284c7;
+            font-size: 22px;
+        }
+
+        .card-heading h2 {
+            font-size: 25px;
+            margin-bottom: 4px;
+        }
+
+        .card-heading p {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .ai-status {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 12px;
+            color: #16a34a;
+            background: #f0fdf4;
+            padding: 8px 12px;
+            border-radius: 20px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            background: #22c55e;
+            border-radius: 50%;
+        }
+
+        /* FORM GRID */
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group.full {
+            grid-column: span 2;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 9px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            z-index: 2;
+        }
+
+        input,
+        select {
+            width: 100%;
+            height: 54px;
+            padding: 0 18px 0 45px;
+            border: 1px solid #dbe2ea;
+            border-radius: 13px;
+            background: #f8fafc;
+            color: #1e293b;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+            transition: 0.25s;
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #0284c7;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(2,132,199,0.1);
+        }
+
+        /* BUTTON */
+
+        .generate-btn {
+            width: 100%;
+            height: 58px;
+            border: none;
+            border-radius: 14px;
+            margin-top: 28px;
+            background: linear-gradient(135deg, #0284c7, #2563eb);
+            color: white;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 25px rgba(37,99,235,0.25);
+            transition: 0.25s;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(37,99,235,0.35);
+        }
+
+        .generate-btn:active {
+            transform: translateY(0);
+        }
+
+        /* FEATURES */
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-top: 25px;
+        }
+
+        .feature {
+            padding: 22px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 18px;
+            color: white;
+            backdrop-filter: blur(12px);
+        }
+
+        .feature i {
+            font-size: 22px;
+            color: #7dd3fc;
+            margin-bottom: 14px;
+        }
+
+        .feature h3 {
+            font-size: 15px;
+            margin-bottom: 7px;
+        }
+
+        .feature p {
+            color: rgba(255,255,255,0.65);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        /* RESULT */
+
+        .result {
+            display: none;
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 18px;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+        }
+
+        .result h3 {
+            color: #166534;
+            margin-bottom: 8px;
+        }
+
+        .result p {
+            color: #365314;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: rgba(255,255,255,0.65);
+            font-size: 12px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 768px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 45px;
+            }
+
+            .planner-card {
+                padding: 25px 20px;
+                border-radius: 22px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: span 1;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .card-heading {
+                align-items: flex-start;
+                gap: 15px;
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .logo {
+                font-size: 19px;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero p {
+                font-size: 14px;
+            }
+
+            .planner-card {
+                padding: 22px 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fa-solid fa-location-dot"></i>
+            </div>
+
+            Yatra AI
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#explore">Explore</a></li>
+            <li><a href="#my-trips">My Trips</a></li>
+            <li><a href="#about">About</a></li>
+        </ul>
+
+    </nav>
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="badge">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            AI-Powered Travel Planning
+        </div>
+
+        <h1>
+            Explore More.<br>
+            <span>With Yatra AI.</span>
+        </h1>
+
+        <p>
+            Let Yatra AI create a personalized travel experience
+            based on your destination, time, budget and interests.
+        </p>
+
+    </section>
+     <div class="ai-status">
+                    <span class="status-dot"></span>
+                    AI Ready
+                </div>
+
+
+
+    <!-- MAIN -->
+
+    <main class="container">
+
+        <div class="planner-card">
+
+            <div class="card-heading">
+
+                <div class="heading-left">
+
+                    <div class="heading-icon">
+                        <i class="fa-solid fa-route"></i>
+                    </div>
+
+                    <div>
+                        <h2>Plan Your Trip</h2>
+                        <p>Create your personalized AI travel itinerary</p>
+                    </div>
+
+                </div>
+
+               
+            </div>
+
+        <!-- FEATURES -->
+
+        <div class="features">
+
+            <div class="feature">
+
+                <i class="fa-solid fa-brain"></i>
+
+                <h3>AI Personalized</h3>
+
+                <p>
+                    Get an itinerary designed around
+                    your interests and travel preferences.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <i class="fa-solid fa-wallet"></i>
+
+                <h3>Budget Friendly</h3>
+
+                <p>
+                    Plan your trip according to your
+                    available travel budget.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <i class="fa-solid fa-clock"></i>
+
+                <h3>Save Time</h3>
+
+                <p>
+                    Generate a complete travel plan
+                    within seconds.
+                </p>
+
+            </div>
+            <a href="templates.html">View Templates</a>
+
+        </div>
+
+    </main>
+
+    
+<!-- FOOTER -->
+
+    <footer>
+
+        © 2026 Yatra AI · Intelligent Travel Companion <br>
+        Next Gen Hub
+
+    </footer>

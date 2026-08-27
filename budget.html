@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yatra AI - Budget Planner</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: #007bff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        #result {
+            margin-top: 25px;
+        }
+
+        .budget-card {
+            padding: 15px;
+            margin: 10px 0;
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+
+        .total {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🤖 Yatra AI Budget Planner</h1>
+
+    <label>Destination</label>
+    <input type="text" id="destination" placeholder="Example: Goa">
+
+    <label>Number of Days</label>
+    <input type="number" id="days" min="1" placeholder="Example: 5">
+
+    <label>Number of Travelers</label>
+    <input type="number" id="travelers" min="1" placeholder="Example: 2">
+
+    <label>Total Budget (₹)</label>
+    <input type="number" id="budget" min="1" placeholder="Example: 30000">
+
+    <button onclick="calculateBudget()">
+        💰 Create Budget Plan
+    </button>
+
+    <div id="result"></div>
+
+</div>
+
+<script>
+function calculateBudget() {
+
+    const destination =
+        document.getElementById("destination").value;
+
+    const days =
+        Number(document.getElementById("days").value);
+
+    const travelers =
+        Number(document.getElementById("travelers").value);
+
+    const budget =
+        Number(document.getElementById("budget").value);
+
+    if (!destination || days <= 0 || travelers <= 0 || budget <= 0) {
+        alert("Please enter all details correctly.");
+        return;
+    }
+
+    /*
+       Budget Distribution
+       -------------------
+       Accommodation = 30%
+       Food          = 20%
+       Transportation= 20%
+       Activities    = 15%
+       Emergency     = 10%
+       Miscellaneous = 5%
+    */
+
+    const accommodation = budget * 0.30;
+    const food = budget * 0.20;
+    const transport = budget * 0.20;
+    const activities = budget * 0.15;
+    const emergency = budget * 0.10;
+    const miscellaneous = budget * 0.05;
+
+    const dailyBudget = budget / days;
+    const perPerson = budget / travelers;
+
+    document.getElementById("result").innerHTML = `
+
+        <h2>📍 ${destination} Budget Plan</h2>
+
+        <div class="budget-card">
+            🏨 <b>Accommodation:</b>
+            ₹${accommodation.toFixed(0)}
+        </div>
+
+        <div class="budget-card">
+            🍴 <b>Food:</b>
+            ₹${food.toFixed(0)}
+        </div>
+
+        <div class="budget-card">
+            🚗 <b>Transportation:</b>
+            ₹${transport.toFixed(0)}
+        </div>
+
+        <div class="budget-card">
+            🎟️ <b>Activities & Attractions:</b>
+            ₹${activities.toFixed(0)}
+        </div>
+
+        <div class="budget-card">
+            🚨 <b>Emergency Fund:</b>
+            ₹${emergency.toFixed(0)}
+        </div>
+
+        <div class="budget-card">
+            🛍️ <b>Miscellaneous:</b>
+            ₹${miscellaneous.toFixed(0)}
+        </div>
+
+        <div class="budget-card">
+            📅 <b>Daily Budget:</b>
+            ₹${dailyBudget.toFixed(0)}
+        </div>
+
+        <div class="budget-card">
+            👤 <b>Budget Per Person:</b>
+            ₹${perPerson.toFixed(0)}
+        </div>
+
+        <div class="total">
+            💰 Total Budget: ₹${budget.toFixed(0)}
+        </div>
+    `;
+    
+}
+</script>
+<!-- FOOTER -->
+
+    <footer>
+
+        © 2026 Yatra AI · Intelligent Travel Companion <br>
+        Next Gen Hub
+
+    </footer>
+
+</body>
+</html>
