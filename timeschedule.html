@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Yatra AI - Time Scheduling</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e3a8a;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        .places {
+            margin-top: 15px;
+        }
+
+        .place {
+            padding: 12px;
+            margin: 8px 0;
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+
+        .place input {
+            width: auto;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 20px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .schedule {
+            margin-top: 25px;
+        }
+
+        .card {
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 5px solid #2563eb;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .time {
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .error {
+            color: red;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🗺️ Yatra AI</h1>
+    <h2>⏰ Smart Time Scheduler</h2>
+
+    <label>Start Time</label>
+    <input type="time" id="start_time" value="09:00">
+
+    <label>End Time</label>
+    <input type="time" id="end_time" value="18:00">
+
+    <label>Select Tourist Places</label>
+
+    <div class="places">
+
+        <div class="place">
+            <input type="checkbox" value="Temple" class="placeCheck">
+            🛕 Temple
+        </div>
+
+        <div class="place">
+            <input type="checkbox" value="Historical Fort" class="placeCheck">
+            🏰 Historical Fort
+        </div>
+
+        <div class="place">
+            <input type="checkbox" value="Museum" class="placeCheck">
+            🏛️ Museum
+        </div>
+
+        <div class="place">
+            <input type="checkbox" value="Waterfall" class="placeCheck">
+            💧 Waterfall
+        </div>
+
+        <div class="place">
+            <input type="checkbox" value="Market" class="placeCheck">
+            🛍️ Local Market
+        </div>
+
+        <div class="place">
+            <input type="checkbox" value="Restaurant" class="placeCheck">
+            🍴 Restaurant
+        </div>
+
+    </div>
+
+    <button onclick="generateSchedule()">
+        Generate Smart Schedule
+    </button>
+
+    <div id="error" class="error"></div>
+
+    <div class="schedule" id="schedule"></div>
+
+</div>
+
+
+<script>
+
+async function generateSchedule() {
+
+    const startTime = document.getElementById("start_time").value;
+    const endTime = document.getElementById("end_time").value;
+
+    const selectedPlaces = [];
+
+    document.querySelectorAll(".placeCheck:checked")
+        .forEach(item => {
+            selectedPlaces.push(item.value);
+        });
+
+    document.getElementById("error").innerHTML = "";
+    document.getElementById("schedule").innerHTML = "";
+
+    const response = await fetch("/generate_schedule", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+            start_time: startTime,
+            end_time: endTime,
+            places: selectedPlaces
+        })
+
+    });
+
+    const data = await response.json();
+
+    if (data.error) {
+        document.getElementById("error").innerHTML =
+            "⚠️ " + data.error;
+        return;
+    }
+
+    let html = "<h2>📅 Your Smart Itinerary</h2>";
+
+    data.schedule.forEach((item, index) => {
+
+        html += `
+            <div class="card">
+
+                <div class="time">
+                    ${item.start} - ${item.end}
+                </div>
+
+                <h3>
+                    ${index + 1}. ${item.place}
+                </h3>
+
+                <p>
+                    ⏱️ Duration: ${item.duration}
+                </p>
+
+            </div>
+        `;
+
+    });
+
+    document.getElementById("schedule").innerHTML = html;
+}
+
+</script>
+<!-- FOOTER -->
+
+    <footer>
+
+        © 2026 Yatra AI · Intelligent Travel Companion <br>
+        Next Gen Hub
+
+    </footer>
+
+</body>
+</html>

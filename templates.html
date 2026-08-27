@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Yatra AI - Smart Tourism</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f5f7fb;
+        }
+
+        header {
+            background: #2563eb;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 30px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,.08);
+        }
+
+        .icon {
+            font-size: 35px;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <section class="hero">
+
+        <div class="badge">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            AI-Powered Travel Planning
+        </div>
+
+        <h1>
+            Explore More.<br>
+            <span>With Yatra AI.</span>
+        </h1>
+
+        <p>
+            Let Yatra AI create a personalized travel experience
+            based on your destination, time, budget and interests.
+        </p>
+
+    </section>
+</header>
+
+
+<div class="container">
+
+    <div class="grid">
+
+        <div class="card">
+            <div class="icon">🤖</div>
+            <h2>AI Travel Assistant</h2>
+            <p>Ask questions and get travel assistance.</p>
+            <button onclick="assistant()">
+                Ask AI
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="icon">🗺️</div>
+            <h2>Personalized Itinerary</h2>
+            <p>Create a customized travel plan.</p>
+            <button onclick="itinerary()">
+                Generate
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="icon">💰</div>
+            <h2>Budget Planning</h2>
+            <p>Plan your trip according to your budget.</p>
+           
+            <button onclick="budget()">
+                 <a href="budget.html">Budget Planner</a>
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="icon">⏰</div>
+            <h2>Time Scheduling</h2>
+            <p>Build a schedule according to available time.</p>
+            <button onclick="schedule()">
+                <a href="timeschedule.html">Time Scheduler</a>
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="icon">❤️</div>
+            <h2>Recommendations</h2>
+            <p>Get recommendations based on your interests.</p>
+            <button onclick="recommend()">
+                Explore
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="icon">🏨</div>
+            <h2>Hotels & Restaurants</h2>
+            <p>Find accommodation and food.</p>
+            <button onclick="hotels()">
+                <a href="hotel.html"> Hotel & Restaurants </a>
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="icon">🏛️</div>
+            <h2>Culture & Heritage</h2>
+            <p>Explore history and local culture.</p>
+            <button onclick="heritage()">
+                Explore
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="icon">🚗</div>
+            <h2>Transportation</h2>
+            <p>Find transportation and navigation options.</p>
+            <button onclick="transport()">
+                Navigate
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="icon">🚨</div>
+            <h2>Emergency</h2>
+            <p>Quick access to emergency services.</p>
+            <button onclick="emergency()">
+                Emergency
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="icon">⛽</div>
+            <h2>Petrol & Diesel</h2>
+            <p>Find nearby fuel stations.</p>
+            <button onclick="fuel()">
+                Find Pump
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="icon">🔧</div>
+            <h2>Puncture Shops</h2>
+            <p>Find nearby car and bike puncture shops.</p>
+            <button onclick="puncture()">
+                Find Shop
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="icon">🛠️</div>
+            <h2>Service Centres</h2>
+            <p>Find nearby vehicle service centres.</p>
+            <button onclick="service()">
+                Find Centre
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+async function getAPI(url, options = {}) {
+
+    const response = await fetch(url, options);
+
+    const data = await response.json();
+
+    console.log(data);
+
+    alert(JSON.stringify(data, null, 2));
+}
+
+
+function assistant() {
+
+    getAPI("/api/assistant", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            question: "What should I visit?",
+            destination: "Kolhapur"
+        })
+    });
+}
+
+
+function itinerary() {
+
+    getAPI("/api/itinerary", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            destination: "Kolhapur",
+            days: 2,
+            budget: 3000,
+            interests: [
+                "History",
+                "Culture"
+            ]
+        })
+    });
+}
+
+
+function budget() {
+
+    getAPI("/api/budget", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            budget: 5000
+        })
+    });
+}
+
+
+function schedule() {
+
+    getAPI("/api/schedule", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            hours: 6
+        })
+    });
+}
+
+
+function recommend() {
+
+    getAPI("/api/recommendations", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            interests: [
+                "history",
+                "food",
+                "nature"
+            ]
+        })
+    });
+}
+
+
+function hotels() {
+
+    getAPI("/api/hotels?destination=Kolhapur");
+}
+
+
+function heritage() {
+
+    getAPI("/api/heritage?destination=Kolhapur");
+}
+
+
+function transport() {
+
+    getAPI(
+        "/api/transport?source=Kolhapur&destination=Panhala"
+    );
+}
+
+
+function emergency() {
+
+    getAPI("/api/emergency");
+}
+
+
+function fuel() {
+
+    getAPI(
+        "/api/fuel?latitude=16.7050&longitude=74.2433"
+    );
+}
+
+
+function puncture() {
+
+    getAPI("/api/puncture");
+}
+
+
+function service() {
+
+    getAPI("/api/service-centres?vehicle=bike");
+}
+
+</script>
+<a href="index.html" style>Home</a>
+
+<!-- FOOTER -->
+
+    <footer style="text-align: center; padding: 20px; background: #f5f7fb;">
+
+        © 2026 Yatra AI · Intelligent Travel Companion <br>
+        Next Gen Hub
+
+    </footer>
+
+</body>
+</html>
