@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Yatra AI - Transport</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f7ff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        h1 {
+            text-align: center;
+            color: #1565c0;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0 18px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: #1565c0;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0d47a1;
+        }
+
+        #result {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🚍 Yatra AI</h1>
+    <h2>Transport Planner</h2>
+
+    <label>From:</label>
+    <input type="text" id="from" placeholder="Enter starting location">
+
+    <label>To:</label>
+    <input type="text" id="to" placeholder="Enter destination">
+
+    <label>Transport:</label>
+    <select id="transport">
+        <option value="bus">🚌 Bus</option>
+        <option value="train">🚆 Train</option>
+        <option value="cab">🚕 Cab</option>
+        <option value="auto">🛺 Auto</option>
+    </select>
+
+    <button onclick="findTransport()">Find Transport</button>
+
+    <div id="result"></div>
+
+</div>
+
+<script>
+
+function findTransport() {
+
+    let from = document.getElementById("from").value;
+    let to = document.getElementById("to").value;
+    let transport = document.getElementById("transport").value;
+
+    if (from === "" || to === "") {
+        alert("Please enter source and destination.");
+        return;
+    }
+
+    let time, fare;
+
+    if (transport === "bus") {
+        time = "2 hours";
+        fare = "₹80 - ₹150";
+    }
+    else if (transport === "train") {
+        time = "1.5 hours";
+        fare = "₹100 - ₹250";
+    }
+    else if (transport === "cab") {
+        time = "1 hour";
+        fare = "₹500 - ₹900";
+    }
+    else {
+        time = "1.5 hours";
+        fare = "₹200 - ₹400";
+    }
+
+    document.getElementById("result").style.display = "block";
+
+    document.getElementById("result").innerHTML =
+        "<h3>🧭 Yatra AI Recommendation</h3>" +
+        "<p><b>From:</b> " + from + "</p>" +
+        "<p><b>To:</b> " + to + "</p>" +
+        "<p><b>Transport:</b> " + transport.toUpperCase() + "</p>" +
+        "<p><b>Estimated Time:</b> " + time + "</p>" +
+        "<p><b>Estimated Fare:</b> " + fare + "</p>";
+
+}
+
+</script>
+<a href="templates.html">Back to Templates</a>
+<!-- FOOTER -->
+
+    <footer style="text-align: center; padding: 20px; background: #f5f7fb;">
+
+        © 2026 Yatra AI · Intelligent Travel Companion <br>
+        Next Gen Hub
+
+    </footer>
+</body>
+</html>
