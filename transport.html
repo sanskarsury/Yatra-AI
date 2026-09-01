@@ -1,144 +1,344 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE.html>
+<html lang="en">
 <head>
-    <title>Yatra AI - Transport</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yatra AI - Transportation</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f2f7ff;
-            margin: 0;
-            padding: 20px;
-        }
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
 
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-        }
+    body {
+      background: #f5f7fb;
+      color: #222;
+    }
 
-        h1 {
-            text-align: center;
-            color: #1565c0;
-        }
+    header {
+      background: linear-gradient(135deg, #0066ff, #00b4d8);
+      color: white;
+      padding: 25px 8%;
+      text-align: center;
+    }
 
-        label {
-            font-weight: bold;
-        }
+    header h1 {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
 
-        input, select, button {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0 18px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            box-sizing: border-box;
-        }
+    header p {
+      font-size: 16px;
+    }
 
-        button {
-            background: #1565c0;
-            color: white;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-        }
+    .container {
+      width: 90%;
+      max-width: 1100px;
+      margin: 30px auto;
+    }
 
-        button:hover {
-            background: #0d47a1;
-        }
+    .search-box {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      margin-bottom: 30px;
+    }
 
-        #result {
-            background: #e3f2fd;
-            padding: 15px;
-            border-radius: 10px;
-            display: none;
-        }
-    </style>
+    .search-box h2 {
+      margin-bottom: 20px;
+    }
+
+    .inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr auto;
+      gap: 12px;
+    }
+
+    input, select, button {
+      padding: 13px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      font-size: 15px;
+    }
+
+    button {
+      background: #0066ff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #004dcc;
+    }
+
+    .transport-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    }
+
+    .icon {
+      font-size: 45px;
+      margin-bottom: 15px;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      color: #0066ff;
+    }
+
+    .card p {
+      color: #666;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    .result {
+      display: none;
+      background: white;
+      margin-top: 25px;
+      padding: 20px;
+      border-radius: 12px;
+      border-left: 5px solid #0066ff;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      margin-top: 40px;
+      background: #111827;
+      color: white;
+    }
+
+    @media(max-width: 800px) {
+      .inputs {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
+<header>
+  <h1>🚀 YATRA AI</h1>
+  <p>Smart Transportation Planner</p>
+</header>
+
 <div class="container">
 
-    <h1>🚍 Yatra AI</h1>
-    <h2>Transport Planner</h2>
+  <div class="search-box">
+    <h2>📍 Plan Your Transportation</h2>
 
-    <label>From:</label>
-    <input type="text" id="from" placeholder="Enter starting location">
+    <div class="inputs">
 
-    <label>To:</label>
-    <input type="text" id="to" placeholder="Enter destination">
+      <input
+        type="text"
+        id="from"
+        placeholder="From"
+      >
 
-    <label>Transport:</label>
-    <select id="transport">
-        <option value="bus">🚌 Bus</option>
-        <option value="train">🚆 Train</option>
-        <option value="cab">🚕 Cab</option>
-        <option value="auto">🛺 Auto</option>
-    </select>
+      <input
+        type="text"
+        id="to"
+        placeholder="Destination"
+      >
 
-    <button onclick="findTransport()">Find Transport</button>
+      <select id="transportType">
+        <option value="all">All Transport</option>
+        <option value="bus">Bus</option>
+        <option value="train">Train</option>
+        <option value="cab">Cab</option>
+        <option value="auto">Auto</option>
+        <option value="bike">Bike Rental</option>
+        <option value="car">Car Rental</option>
+      </select>
 
-    <div id="result"></div>
+      <button onclick="searchTransport()">
+        Search
+      </button>
+
+    </div>
+  </div>
+
+
+  <div class="transport-grid">
+
+    <div class="card">
+      <div class="icon">🚌</div>
+      <h3>Bus</h3>
+      <p>Find local and intercity bus transportation.</p>
+      <button onclick="selectTransport('Bus')">
+        Explore Bus
+      </button>
+    </div>
+
+
+    <div class="card">
+      <div class="icon">🚆</div>
+      <h3>Train</h3>
+      <p>Plan your journey using railway transportation.</p>
+      <button onclick="selectTransport('Train')">
+        Explore Train
+      </button>
+    </div>
+
+
+    <div class="card">
+      <div class="icon">🚕</div>
+      <h3>Cab</h3>
+      <p>Find convenient taxi and cab transportation.</p>
+      <button onclick="selectTransport('Cab')">
+        Find Cab
+      </button>
+    </div>
+
+
+    <div class="card">
+      <div class="icon">🛺</div>
+      <h3>Auto</h3>
+      <p>Find auto-rickshaw transportation nearby.</p>
+      <button onclick="selectTransport('Auto')">
+        Find Auto
+      </button>
+    </div>
+
+
+    <div class="card">
+      <div class="icon">🏍️</div>
+      <h3>Bike Rental</h3>
+      <p>Rent a bike and explore your destination freely.</p>
+      <button onclick="selectTransport('Bike Rental')">
+        Rent Bike
+      </button>
+    </div>
+
+
+    <div class="card">
+      <div class="icon">🚗</div>
+      <h3>Car Rental</h3>
+      <p>Choose a rental car for comfortable travelling.</p>
+      <button onclick="selectTransport('Car Rental')">
+        Rent Car
+      </button>
+    </div>
+
+  </div>
+
+
+  <div class="result" id="result"></div>
 
 </div>
 
+
+<footer>
+  <p>© 2026 Yatra AI | Smart Tourism Platform</p>
+</footer>
+
+
 <script>
 
-function findTransport() {
+function searchTransport() {
 
-    let from = document.getElementById("from").value;
-    let to = document.getElementById("to").value;
-    let transport = document.getElementById("transport").value;
+  const from = document.getElementById("from").value;
+  const to = document.getElementById("to").value;
+  const type = document.getElementById("transportType").value;
 
-    if (from === "" || to === "") {
-        alert("Please enter source and destination.");
-        return;
-    }
+  const result = document.getElementById("result");
 
-    let time, fare;
+  if (from === "" || to === "") {
+    result.style.display = "block";
+    result.innerHTML =
+      "⚠️ Please enter your starting point and destination.";
+    return;
+  }
 
-    if (transport === "bus") {
-        time = "2 hours";
-        fare = "₹80 - ₹150";
-    }
-    else if (transport === "train") {
-        time = "1.5 hours";
-        fare = "₹100 - ₹250";
-    }
-    else if (transport === "cab") {
-        time = "1 hour";
-        fare = "₹500 - ₹900";
-    }
-    else {
-        time = "1.5 hours";
-        fare = "₹200 - ₹400";
-    }
+  let transportName;
 
-    document.getElementById("result").style.display = "block";
+  if (type === "all") {
+    transportName = "available transportation";
+  } else {
+    transportName =
+      document.getElementById("transportType")
+      .options[
+        document.getElementById("transportType").selectedIndex
+      ].text;
+  }
 
-    document.getElementById("result").innerHTML =
-        "<h3>🧭 Yatra AI Recommendation</h3>" +
-        "<p><b>From:</b> " + from + "</p>" +
-        "<p><b>To:</b> " + to + "</p>" +
-        "<p><b>Transport:</b> " + transport.toUpperCase() + "</p>" +
-        "<p><b>Estimated Time:</b> " + time + "</p>" +
-        "<p><b>Estimated Fare:</b> " + fare + "</p>";
+  result.style.display = "block";
 
+  result.innerHTML = `
+    <h3>🧭 Transportation Result</h3>
+
+    <p>
+      <strong>From:</strong> ${from}
+    </p>
+
+    <p>
+      <strong>To:</strong> ${to}
+    </p>
+
+    <p>
+      <strong>Transport:</strong> ${transportName}
+    </p>
+
+    <br>
+
+    <p>
+      🤖 Yatra AI recommends checking the available
+      transportation options based on your destination,
+      budget and travel time.
+    </p>
+  `;
+}
+
+
+function selectTransport(type) {
+
+  const result = document.getElementById("result");
+
+  result.style.display = "block";
+
+  result.innerHTML = `
+    <h3>🚀 ${type}</h3>
+
+    <p>
+      You selected <strong>${type}</strong>.
+    </p>
+
+    <p>
+      Enter your starting location and destination
+      above to plan your journey.
+    </p>
+  `;
+
+  window.scrollTo({
+    top: document.body.scrollHeight,
+    behavior: "smooth"
+  });
 }
 
 </script>
-<a href="templates.html">Back to Templates</a>
-<!-- FOOTER -->
 
-    <footer style="text-align: center; padding: 20px; background: #f5f7fb;">
-
-        © 2026 Yatra AI · Intelligent Travel Companion <br>
-        Next Gen Hub
-
-    </footer>
 </body>
 </html>
