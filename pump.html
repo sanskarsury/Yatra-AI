@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Yatra AI - Find Fuel Pump</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            text-align: center;
+            margin: 0;
+        }
+
+        header {
+            background: #0066ff;
+            color: white;
+            padding: 25px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        input, button {
+            padding: 12px;
+            margin: 8px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        input {
+            width: 60%;
+        }
+
+        button {
+            background: #0066ff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .pump {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px #ddd;
+            text-align: left;
+        }
+
+        .pump h3 {
+            color: #0066ff;
+        }
+
+        .map {
+            margin-top: 10px;
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>⛽ YATRA AI</h1>
+    <p>Find Nearby Fuel Pumps</p>
+</header>
+
+<div class="container">
+
+    <h2>Find a Fuel Pump</h2>
+
+    <input
+        type="text"
+        id="location"
+        placeholder="Enter city or location"
+    >
+
+    <button onclick="findPump()">
+        🔍 Find Pump
+    </button>
+
+    <div id="results"></div>
+
+</div>
+
+<script>
+
+function findPump() {
+
+    let location =
+        document.getElementById("location").value;
+
+    let results =
+        document.getElementById("results");
+
+    if (location === "") {
+
+        alert("Please enter your location.");
+
+        return;
+    }
+
+    let pumps = [
+
+        {
+            name: "HP Petrol Pump",
+            distance: "",
+            address: location,
+            map: "https://www.google.com/maps/search/HP+Petrol+Pump+" +
+                 encodeURIComponent(location)
+        },
+
+        {
+            name: "IndianOil Petrol Pump",
+            distance: "",
+            address: location,
+            map: "https://www.google.com/maps/search/IndianOil+" +
+                 encodeURIComponent(location)
+        },
+
+        {
+            name: "Bharat Petroleum",
+            distance: "3.4 km",
+            address: location,
+            map: "https://www.google.com/maps/search/Bharat+Petroleum+" +
+                 encodeURIComponent(location)
+        }
+
+    ];
+
+    results.innerHTML = "";
+
+    pumps.forEach(function(pump) {
+
+        results.innerHTML += `
+
+            <div class="pump">
+
+                <h3>⛽ ${pump.name}</h3>
+
+                <p>📍 ${pump.address}</p>
+
+                <p>🚗 Distance: ${pump.distance}</p>
+
+                <a
+                    class="map"
+                    href="${pump.map}"
+                    target="_blank"
+                >
+                    🗺️ Get Directions
+                </a>
+
+            </div>
+
+        `;
+
+    });
+}
+
+</script>
+
+</body>
+</html>
